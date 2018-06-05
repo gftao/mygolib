@@ -345,9 +345,9 @@ func (w *fileLogWriter) Flush() {
 func formatTimeHeader(when time.Time) ([]byte, int) {
 	y, mo, d := when.Date()
 	h, mi, s := when.Clock()
-	ns := when.Nanosecond() / 1000000
+	ns := when.Nanosecond() / 1000
 	//len("2006/01/02 15:04:05.123 ")==24
-	var buf [24]byte
+	var buf [27]byte
 
 	buf[0] = y1[y/1000%10]
 	buf[1] = y2[y/100]
@@ -369,11 +369,14 @@ func formatTimeHeader(when time.Time) ([]byte, int) {
 	buf[17] = s1[s]
 	buf[18] = s2[s]
 	buf[19] = '.'
-	buf[20] = ns1[ns/100]
-	buf[21] = ns1[ns%100/10]
-	buf[22] = ns1[ns%10]
+	buf[20] = ns1[ns/100000]
+	buf[21] = ns1[ns%100000/10000]
+	buf[22] = ns1[ns%10000/1000]
+	buf[23] = ns1[ns%1000/100]
+	buf[24] = ns1[ns%100/10]
+	buf[25] = ns1[ns%10]
 
-	buf[23] = ' '
+	buf[26] = ' '
 
 	return buf[0:], d
 }

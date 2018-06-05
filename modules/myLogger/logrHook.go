@@ -152,14 +152,15 @@ func getMessage(entry *logrus.Entry) (message string, err error) {
 			//}
 			//message = message + fmt.Sprintf("%s:%d", file, lineNumber)
 		}
+	} else {
+		logFormat := MyFormatterConfig{InHook: true}
+		res, err := logFormat.Format(entry)
+		if err != nil {
+			return "", err
+		}
+
+		return string(res), nil
 	}
 
-	logFormat := MyFormatterConfig{InHook:true}
-	res, err := logFormat.Format(entry)
-	if err != nil {
-		return "",err
-	}
-
-	return string(res), nil
 	return
 }

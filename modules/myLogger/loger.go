@@ -14,7 +14,7 @@ const (
 )
 
 func getEntry(name string) *logrus.Entry {
-	return logger.WithFields(locate(logrus.Fields{"N": name}))
+	return GetNameLog(name).WithFields(locate(logrus.Fields{}))
 }
 func locate(fields logrus.Fields) logrus.Fields {
 	_, path, line, ok := runtime.Caller(3)

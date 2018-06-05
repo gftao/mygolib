@@ -14,6 +14,7 @@ var logField = []string{
 	"N", //结点名
 	"G", //GOROUTINE id
 	"F", //文件名，行数
+	"O", //请求标识
 	"M", //说明信息
 }
 

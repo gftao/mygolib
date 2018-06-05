@@ -47,9 +47,9 @@ func HasLoggerInit() bool {
 
 func GetNameLog(name string) (l *logrus.Logger) {
 	if HasLoggerInit() {
-		l = logger.WithFields(logrus.Fields{"N": "name"}).Logger
+		l = logger.WithFields(logrus.Fields{"N": name}).Logger
 	} else {
-		l = logrus.New().WithFields(logrus.Fields{"N": "name"}).Logger
+		l = logrus.New().WithFields(logrus.Fields{"N": name}).Logger
 	}
 	return l
 }

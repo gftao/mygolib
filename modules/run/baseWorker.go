@@ -2,21 +2,17 @@ package run
 
 import (
 	"fmt"
- 	"mygolib/gerror"
+	"mygolib/gerror"
 	"path/filepath"
 	"runtime"
 	"mygolib/modules/myLogger"
-	//"mygolib/modules/myLogger/vendor/github.com/sirupsen/logrus"
 	"github.com/sirupsen/logrus"
 )
 
 type BaseWorker struct {
 	Id       uint32
 	NodeName string
-	cld_order_id string
-	sys_order_id string
-	mcht_order string
-	tran_order_id string
+	OrderId  string
 }
 
 func (t *BaseWorker) Init() gerror.IError {
@@ -24,23 +20,17 @@ func (t *BaseWorker) Init() gerror.IError {
 	return nil
 }
 
-func (t *BaseWorker) SetCldOrderId(orderId string)  {
-	t.cld_order_id = orderId
+func (t *BaseWorker) SetOrderId(orderId string) {
+	t.OrderId = orderId
 }
-func (t *BaseWorker) SetSysOrderId(sysOrderId string)  {
-	t.sys_order_id = sysOrderId
-}
-func (t *BaseWorker) SetMchtOrderId(mchtOrderId string)  {
-	t.mcht_order = mchtOrderId
-}
-func (t *BaseWorker) SetTranOrderId(tranOrderId string)  {
-	t.tran_order_id = tranOrderId
+func (t *BaseWorker) SetSysOrderId(sysOrderId string) {
+	t.OrderId = sysOrderId
 }
 
 func (t *BaseWorker) getEntry() *logrus.Entry {
 	l := myLogger.GetNameLog(t.NodeName)
 
-	return l.WithFields(locate(logrus.Fields{"I": t.Id, "N": t.NodeName, "G": myLogger.GetGID(), "C": t.cld_order_id}))
+	return l.WithFields(locate(logrus.Fields{"I": t.Id, "O": t.OrderId}))
 }
 
 func locate(fields logrus.Fields) logrus.Fields {

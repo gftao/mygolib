@@ -23,6 +23,7 @@ func (t *BaseWorker) Init() gerror.IError {
 func (t *BaseWorker) SetOrderId(orderId string) {
 	t.OrderId = orderId
 }
+
 func (t *BaseWorker) SetSysOrderId(sysOrderId string) {
 	t.OrderId = sysOrderId
 }
@@ -39,6 +40,7 @@ func locate(fields logrus.Fields) logrus.Fields {
 		_, file := filepath.Split(path)
 		fields["F"] = fmt.Sprintf("%s:%d", file, line)
 	}
+	fields["G"] = fmt.Sprintf("%d", myLogger.GetGID())
 	return fields
 }
 

@@ -10,13 +10,15 @@ import (
 )
 
 var IV = []byte{0, 0, 0, 0, 0, 0, 0, 0}
-
+//var IV = []byte("01234567")
 func DesEncrypt(origData, key []byte) ([]byte, gerror.IError) {
 	block, err := des.NewCipher(key)
 	if err != nil {
 		return nil, gerror.New(10000, defs.TRN_SYS_ERROR, err, "des加密失败")
 	}
-	origData = ZeroPadding(origData, block.BlockSize())
+	//origData = ZeroPadding(origData, block.BlockSize())
+	origData = PKCS5Padding(origData, block.BlockSize())
+
 	blockMode := cipher.NewCBCEncrypter(block, IV)
 	crypted := make([]byte, len(origData))
 	// 根据CryptBlocks方法的说明，如下方式初始化crypted也可以
